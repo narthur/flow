@@ -95,8 +95,8 @@
 		if (!currentTask) return;
 		
 		// Calculate session time if timer was active
-		const sessionMinutes = activeTimer ? 
-			Math.round((activeTimer * 60 - remainingSeconds) / 60) : 
+		const sessionMinutes = $timer.activeTimer ? 
+			Math.round(($timer.activeTimer * 60 - $timer.remainingSeconds) / 60) : 
 			0;
 
 		// Clear timer if active
@@ -104,8 +104,7 @@
 			clearInterval(timerInterval);
 			timerInterval = null;
 		}
-		activeTimer = null;
-		remainingSeconds = 0;
+		timer.clear();
 
 		// Punt task with session stats
 		tasks.punt(currentTask.id, sessionMinutes);
