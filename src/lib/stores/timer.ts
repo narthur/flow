@@ -16,6 +16,7 @@ function createTimerStore() {
     return {
         subscribe,
         start: (minutes: number) => {
+            console.log(`Starting timer for ${minutes} minutes`);
             update(state => ({
                 ...state,
                 activeTimer: minutes,
@@ -49,6 +50,7 @@ function createTimerStore() {
             }));
         },
         clear: () => {
+            console.log('Clearing timer');
             set({
                 activeTimer: null,
                 remainingSeconds: 0,

@@ -155,6 +155,7 @@ function createTaskStore() {
 			update((tasks) => tasks.filter((task) => task.id !== taskId));
 		},
 		completeTask: (taskId: string) => {
+			console.log(`Completing task ${taskId}`);
 			update((tasks) =>
 				tasks.map((task) =>
 					task.id === taskId
