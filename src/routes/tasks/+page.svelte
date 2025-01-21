@@ -12,7 +12,7 @@
 	}
 </script>
 
-<div class="mx-auto max-w-2xl p-6">
+<div class="mx-auto max-w-2xl p-6 pt-12">
 	<header class="mb-8 flex items-center justify-between">
 		<h1 class="text-2xl font-bold text-neutral-800">All Tasks</h1>
 		<nav>
