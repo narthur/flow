@@ -65,6 +65,11 @@ function createTaskStore() {
                     ? { ...task, title }
                     : task
             ));
+        },
+        addTask: (title: string = 'New Task') => {
+            const id = crypto.randomUUID();
+            update(tasks => [...tasks, { id, title }]);
+            return id;
         }
     };
 }

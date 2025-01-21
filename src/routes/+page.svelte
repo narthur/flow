@@ -72,12 +72,12 @@
 	}
 </script>
 
-<div class="mx-auto max-w-2xl p-6">
+<div class="relative mx-auto max-w-2xl p-6">
 	{#if currentTask}
 		<div class="mb-6 rounded-lg bg-white p-6 shadow-lg">
 			<input
 				type="text"
-				class="mb-4 w-full bg-transparent text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-1"
+				class="mb-4 w-full rounded bg-transparent px-1 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
 				value={currentTask.title}
 				on:input={(e) => tasks.updateTitle(currentTask.id, e.currentTarget.value)}
 			/>
@@ -152,4 +152,28 @@
 			<p class="mt-2 text-gray-500">All tasks are either completed or postponed</p>
 		</div>
 	{/if}
+
+	<!-- Floating Action Button -->
+	<button
+		class="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600"
+		aria-label="Add new task"
+		on:click={() => {
+			const title = prompt('What task would you like to add?');
+			if (title) {
+				const id = tasks.addTask(title);
+				console.log('Added new task with id:', id);
+			}
+		}}
+		title="Add new task"
+	>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			class="h-6 w-6"
+			fill="none"
+			viewBox="0 0 24 24"
+			stroke="currentColor"
+		>
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+		</svg>
+	</button>
 </div>
