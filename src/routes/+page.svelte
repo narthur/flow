@@ -116,29 +116,26 @@
 
 <div class="relative mx-auto max-w-2xl p-6 pt-12">
 	<header class="mb-8">
-		<h1 class="text-2xl font-bold text-neutral-800">Timer</h1>
+		<h1 class="text-2xl font-bold text-neutral-800 dark:text-neutral-100">Timer</h1>
 	</header>
 
-	{#if currentTask}
-		<div
-			class="mb-6 rounded-lg bg-white p-6 shadow-md transition-shadow duration-200 hover:shadow-lg"
-		>
+	{#if currentTask}		<div class="mb-6 rounded-lg bg-white p-6 shadow-md transition-shadow duration-200 hover:shadow-lg dark:bg-neutral-800">
 			<input
 				type="text"
-				class="mb-4 w-full rounded bg-transparent px-3 py-2 text-2xl font-bold transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-primary-500 border border-transparent hover:border-neutral-200 shadow-sm"
+				class="mb-4 w-full rounded bg-transparent px-3 py-2 text-2xl font-bold transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-primary-500 border border-transparent hover:border-neutral-200 shadow-sm dark:text-neutral-100"
 				value={currentTask?.title ?? ''}
 				on:input={(e) => currentTask && tasks.updateTitle(currentTask.id, e.currentTarget.value)}
 			/>
 			{#if currentTask.description}
-				<p class="mb-6 text-gray-600">{currentTask.description}</p>
+				<p class="mb-6 text-neutral-600 dark:text-neutral-400">{currentTask.description}</p>
 			{/if}
 
 			<div class="mb-8">
-				<label for="notes" class="mb-2 block text-sm font-medium text-gray-700">Notes</label>
+				<label for="notes" class="mb-2 block text-sm font-medium text-neutral-700 dark:text-neutral-300">Notes</label>
 				<textarea
 					id="notes"
 					rows="3"
-					class="focus:border-primary-500 focus:ring-primary-500 w-full resize-none rounded-lg border-neutral-200 bg-white px-4 py-3 transition-colors duration-200 focus:ring-2"
+					class="focus:border-primary-500 focus:ring-primary-500 w-full resize-none rounded-lg border-neutral-200 bg-white px-4 py-3 transition-colors duration-200 focus:ring-2 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100"
 					placeholder="Add notes about this task..."
 					value={currentTask?.notes ?? ''}
 					on:input={(e) => currentTask && tasks.updateNotes(currentTask.id, e.currentTarget.value)}
@@ -153,7 +150,7 @@
 						>
 							{formatTime($timer.remainingSeconds)}
 						</div>
-						<div class="mt-2 text-gray-500">
+						<div class="mt-2 text-neutral-500 dark:text-neutral-400">
 							Working for {$timer.activeTimer} minutes
 						</div>
 						<div class="mt-6 flex justify-center gap-2">
@@ -260,8 +257,8 @@
 		</div>
 	{:else}
 		<div class="py-12 text-center">
-			<h2 class="text-2xl font-bold text-gray-700">No tasks available right now</h2>
-			<p class="mt-2 text-gray-500">All tasks are either completed or postponed</p>
+			<h2 class="text-2xl font-bold text-neutral-700 dark:text-neutral-300">No tasks available right now</h2>
+			<p class="mt-2 text-neutral-500 dark:text-neutral-400">All tasks are either completed or postponed</p>
 		</div>
 	{/if}
 
