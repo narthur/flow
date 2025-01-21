@@ -88,11 +88,24 @@
 </script>
 
 <div class="relative mx-auto max-w-2xl p-6">
+	<header class="mb-8 flex items-center justify-between">
+		<h1 class="text-2xl font-bold text-neutral-800">Flow</h1>
+		<nav>
+			<a
+				href="/tasks"
+				class="rounded bg-neutral-100 px-4 py-2 text-neutral-800 hover:bg-neutral-200 transition-colors duration-200"
+			>
+				View All Tasks
+			</a>
+		</nav>
+	</header>
 	{#if currentTask}
-		<div class="mb-6 rounded-lg bg-white p-6 shadow-md hover:shadow-lg transition-shadow duration-200">
+		<div
+			class="mb-6 rounded-lg bg-white p-6 shadow-md transition-shadow duration-200 hover:shadow-lg"
+		>
 			<input
 				type="text"
-				class="mb-4 w-full rounded bg-transparent px-3 py-2 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors duration-200"
+				class="focus:ring-primary-500 mb-4 w-full rounded bg-transparent px-3 py-2 text-2xl font-bold transition-colors duration-200 focus:outline-none focus:ring-2"
 				value={currentTask?.title ?? ''}
 				on:input={(e) => currentTask && tasks.updateTitle(currentTask.id, e.currentTarget.value)}
 			/>
@@ -105,7 +118,7 @@
 				<textarea
 					id="notes"
 					rows="3"
-					class="w-full rounded-lg border-neutral-200 bg-white px-4 py-3 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 transition-colors duration-200 resize-none"
+					class="focus:border-primary-500 focus:ring-primary-500 w-full resize-none rounded-lg border-neutral-200 bg-white px-4 py-3 transition-colors duration-200 focus:ring-2"
 					placeholder="Add notes about this task..."
 					value={currentTask?.notes ?? ''}
 					on:input={(e) => currentTask && tasks.updateNotes(currentTask.id, e.currentTarget.value)}
@@ -115,7 +128,9 @@
 			<div class="space-y-4">
 				{#if activeTimer}
 					<div class="py-4 text-center">
-						<div class="text-primary-600 font-mono text-4xl font-bold transition-colors duration-200">
+						<div
+							class="text-primary-600 font-mono text-4xl font-bold transition-colors duration-200"
+						>
 							{formatTime(remainingSeconds)}
 						</div>
 						<div class="mt-2 text-gray-500">
@@ -124,7 +139,7 @@
 						<div class="mt-4 flex justify-center gap-2">
 							{#if timerInterval}
 								<button
-									class="rounded bg-neutral-100 px-4 py-2 text-neutral-800 hover:bg-neutral-200 transition-colors duration-200"
+									class="rounded bg-neutral-100 px-4 py-2 text-neutral-800 transition-colors duration-200 hover:bg-neutral-200"
 									on:click={() => {
 										if (timerInterval) {
 											clearInterval(timerInterval);
@@ -136,7 +151,7 @@
 								</button>
 							{:else}
 								<button
-									class="rounded bg-primary-600 px-4 py-2 text-white hover:bg-primary-700 transition-colors duration-200"
+									class="bg-primary-600 hover:bg-primary-700 rounded px-4 py-2 text-white transition-colors duration-200"
 									on:click={() => {
 										timerInterval = setInterval(() => {
 											remainingSeconds--;
@@ -153,7 +168,7 @@
 								</button>
 							{/if}
 							<button
-								class="rounded bg-primary-600 px-4 py-2 text-white hover:bg-primary-700 transition-colors duration-200"
+								class="bg-primary-600 hover:bg-primary-700 rounded px-4 py-2 text-white transition-colors duration-200"
 								on:click={() => {
 									remainingSeconds = (activeTimer ?? 0) * 60;
 									if (timerInterval) {
@@ -183,7 +198,7 @@
 					<div class="flex flex-wrap gap-2">
 						{#each timeOptions as option}
 							<button
-								class="rounded bg-primary-600 px-4 py-2 text-white hover:bg-primary-700 transition-colors duration-200"
+								class="bg-primary-600 hover:bg-primary-700 rounded px-4 py-2 text-white transition-colors duration-200"
 								on:click={() => startTimer(option.minutes)}
 							>
 								{option.label}
@@ -197,10 +212,10 @@
 						type="text"
 						bind:value={postponeInput}
 						placeholder="e.g. tomorrow at 2pm"
-						class="flex-1 rounded border-neutral-200 px-4 py-2 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 transition-colors duration-200"
+						class="focus:border-primary-500 focus:ring-primary-500 flex-1 rounded border-neutral-200 px-4 py-2 transition-colors duration-200 focus:ring-2"
 					/>
 					<button
-						class="rounded bg-primary-600 px-4 py-2 text-white hover:bg-primary-700 transition-colors duration-200"
+						class="bg-primary-600 hover:bg-primary-700 rounded px-4 py-2 text-white transition-colors duration-200"
 						on:click={handlePostpone}
 					>
 						Postpone
@@ -212,7 +227,7 @@
 
 				<div class="flex gap-2">
 					<button
-						class="flex-1 rounded bg-neutral-100 px-4 py-2 text-neutral-800 hover:bg-neutral-200 transition-colors duration-200"
+						class="flex-1 rounded bg-neutral-100 px-4 py-2 text-neutral-800 transition-colors duration-200 hover:bg-neutral-200"
 						on:click={() => {
 							if (confirm('Are you sure you want to delete this task?') && currentTask) {
 								tasks.deleteTask(currentTask.id);
@@ -222,7 +237,7 @@
 						Delete
 					</button>
 					<button
-						class="flex-1 rounded bg-primary-600 px-4 py-2 text-white hover:bg-primary-700 transition-colors duration-200"
+						class="bg-primary-600 hover:bg-primary-700 flex-1 rounded px-4 py-2 text-white transition-colors duration-200"
 						on:click={() => currentTask && tasks.completeTask(currentTask.id)}
 					>
 						Complete
@@ -230,7 +245,7 @@
 				</div>
 
 				<button
-					class="w-full rounded bg-neutral-100 px-4 py-2 text-neutral-800 hover:bg-neutral-200 transition-colors duration-200"
+					class="w-full rounded bg-neutral-100 px-4 py-2 text-neutral-800 transition-colors duration-200 hover:bg-neutral-200"
 					on:click={handlePunt}
 				>
 					Skip for now
@@ -246,7 +261,7 @@
 
 	<!-- Add Task Button -->
 	<button
-		class="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-primary-600 text-white shadow-md hover:bg-primary-700 hover:shadow-lg transition-all duration-200"
+		class="bg-primary-600 hover:bg-primary-700 fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-md transition-all duration-200 hover:shadow-lg"
 		aria-label="Add tasks"
 		on:click={() => (showAddTaskModal = true)}
 		title="Add tasks"
@@ -269,7 +284,7 @@
 				<h2 class="mb-4 text-xl font-bold">Add Tasks</h2>
 				<p class="mb-2 text-sm text-gray-600">Enter one task per line</p>
 				<textarea
-					class="mb-4 h-32 w-full rounded-lg border border-neutral-200 bg-white p-4 shadow-inner transition-all duration-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 hover:border-neutral-300"
+					class="focus:border-primary-500 focus:ring-primary-500 mb-4 h-32 w-full rounded-lg border border-neutral-200 bg-white p-4 shadow-inner transition-all duration-200 hover:border-neutral-300 focus:ring-2"
 					placeholder="Buy groceries&#10;Call dentist&#10;Write report"
 					bind:value={newTaskInput}
 					on:keydown={(e) => {
@@ -289,7 +304,7 @@
 						Cancel
 					</button>
 					<button
-						class="rounded-lg border border-primary-600 bg-gradient-to-b from-primary-400 to-primary-500 px-4 py-2 text-white shadow-sm transition-all duration-200 hover:from-primary-500 hover:to-primary-600 active:translate-y-0.5 active:shadow-none"
+						class="border-primary-600 from-primary-400 to-primary-500 hover:from-primary-500 hover:to-primary-600 rounded-lg border bg-gradient-to-b px-4 py-2 text-white shadow-sm transition-all duration-200 active:translate-y-0.5 active:shadow-none"
 						on:click={handleAddTasks}
 					>
 						Add Tasks
