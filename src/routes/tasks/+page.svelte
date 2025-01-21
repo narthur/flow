@@ -17,11 +17,7 @@
 	<header class="mb-8">
 		<div class="flex items-center justify-between">
 			<h1 class="text-2xl font-bold text-neutral-800">All Tasks</h1>
-			<nav>
-				<a href="/" class="inline-block">
-					<Button>Back to Timer</Button>
-				</a>
-			</nav>
+
 		</div>
 
 		<div class="flex gap-2">

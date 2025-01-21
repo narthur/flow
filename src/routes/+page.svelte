@@ -115,16 +115,8 @@
 </script>
 
 <div class="relative mx-auto max-w-2xl p-6 pt-12">
-	<header class="mb-8 flex items-center justify-between">
-		<h1 class="text-2xl font-bold text-neutral-800">Flow</h1>
-		<nav>
-			<a
-				href="/tasks"
-				class="rounded border border-neutral-300 bg-white px-4 py-2 text-neutral-700 transition-colors duration-200 hover:bg-neutral-50"
-			>
-				View All Tasks
-			</a>
-		</nav>
+	<header class="mb-8">
+		<h1 class="text-2xl font-bold text-neutral-800">Timer</h1>
 	</header>
 
 	{#if currentTask}

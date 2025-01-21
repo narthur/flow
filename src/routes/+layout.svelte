@@ -15,6 +15,8 @@
 	<nav class="border-b border-neutral-200 bg-white">
 		<div class="mx-auto max-w-2xl px-6">
 			<div class="flex h-14 items-center gap-6">
+				<span class="text-lg font-bold text-neutral-800">Flow</span>
+				<span class="text-neutral-300">|</span>
 				{#each navItems as item}
 					<a
 						href={item.href}
