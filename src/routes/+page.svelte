@@ -57,6 +57,12 @@
 			if (remainingSeconds <= 0) {
 				if (timerInterval) clearInterval(timerInterval);
 				timerInterval = null;
+
+				// Record the completed session
+				if (currentTask && activeTimer) {
+					tasks.recordSession(currentTask.id, activeTimer);
+				}
+
 				activeTimer = null;
 				chime();
 			}
@@ -251,7 +257,25 @@
 						<Button
 							variant="secondary"
 							flex
-							on:click={() => currentTask && tasks.completeTask(currentTask.id)}
+							on:click={() => {
+								if (!currentTask) return;
+								
+								// Record final session if timer was active
+								if (activeTimer) {
+									const sessionMinutes = Math.round((activeTimer * 60 - remainingSeconds) / 60);
+									tasks.recordSession(currentTask.id, sessionMinutes);
+								}
+
+								// Clear timer
+								if (timerInterval) {
+									clearInterval(timerInterval);
+									timerInterval = null;
+								}
+								activeTimer = null;
+								remainingSeconds = 0;
+
+								tasks.completeTask(currentTask.id);
+							}}
 						>
 							Complete
 						</Button>

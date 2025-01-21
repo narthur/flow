@@ -86,6 +86,23 @@ function createTaskStore() {
             ));
             return true;
         },
+        recordSession: (taskId: string, minutes: number) => {
+            if (minutes <= 0) return;
+            
+            update(tasks => tasks.map(task =>
+                task.id === taskId
+                    ? {
+                        ...task,
+                        stats: {
+                            ...task.stats,
+                            sessionCount: task.stats.sessionCount + 1,
+                            totalMinutes: task.stats.totalMinutes + minutes
+                        }
+                    }
+                    : task
+            ));
+        },
+
         punt: (taskId: string, sessionMinutes: number = 0) => {
             update(tasks => {
                 const task = tasks.find(t => t.id === taskId);

@@ -80,7 +80,7 @@
 							<span class="font-medium">{task.stats.sessionCount}</span> sessions
 						</div>
 						<div>
-							<span class="font-medium">{task.stats.totalMinutes}</span> minutes
+							<span class="font-medium">{(task.stats.totalMinutes).toFixed(1)}</span> minutes
 						</div>
 						<div>
 							<span class="font-medium">{task.stats.postponeCount}</span> postponements
