@@ -90,11 +90,11 @@
 <div class="relative mx-auto max-w-2xl p-6">
 	{#if currentTask}
 		<div
-			class="mb-6 rounded-lg bg-white p-6 shadow-lg transition-shadow duration-200 hover:shadow-xl"
+			class="mb-6 rounded-lg bg-gradient-to-br from-white to-neutral-50 p-6 shadow-[0_2px_4px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)] transition-all duration-200 hover:shadow-[0_4px_8px_rgba(0,0,0,0.12),0_12px_24px_rgba(0,0,0,0.12)] border border-neutral-200"
 		>
 			<input
 				type="text"
-				class="focus:ring-primary-500 mb-4 w-full rounded bg-transparent px-1 text-2xl font-bold transition-colors duration-200 focus:outline-none focus:ring-2"
+				class="mb-4 w-full rounded bg-transparent px-3 py-2 text-2xl font-bold transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-primary-500 border border-transparent hover:border-neutral-200 shadow-sm"
 				value={currentTask?.title ?? ''}
 				on:input={(e) => currentTask && tasks.updateTitle(currentTask.id, e.currentTarget.value)}
 			/>
@@ -107,7 +107,7 @@
 				<textarea
 					id="notes"
 					rows="3"
-					class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-md border-neutral-300 shadow-sm transition-colors duration-200"
+					class="w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 shadow-inner transition-all duration-200 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 hover:border-neutral-300"
 					placeholder="Add notes about this task..."
 					value={currentTask?.notes ?? ''}
 					on:input={(e) => currentTask && tasks.updateNotes(currentTask.id, e.currentTarget.value)}
@@ -126,7 +126,7 @@
 						<div class="mt-4 flex justify-center gap-2">
 							{#if timerInterval}
 								<button
-									class="bg-warning-500 hover:bg-warning-600 rounded px-4 py-2 text-white transition-colors duration-200"
+									class="rounded-lg border border-warning-600 bg-gradient-to-b from-warning-400 to-warning-500 px-4 py-2 text-white shadow-sm transition-all duration-200 hover:from-warning-500 hover:to-warning-600 active:translate-y-0.5 active:shadow-none"
 									on:click={() => {
 										if (timerInterval) {
 											clearInterval(timerInterval);
@@ -155,7 +155,7 @@
 								</button>
 							{/if}
 							<button
-								class="bg-primary-500 hover:bg-primary-600 rounded px-4 py-2 text-white transition-colors duration-200"
+								class="rounded-lg border border-primary-600 bg-gradient-to-b from-primary-400 to-primary-500 px-4 py-2 text-white shadow-sm transition-all duration-200 hover:from-primary-500 hover:to-primary-600 active:translate-y-0.5 active:shadow-none"
 								on:click={() => {
 									remainingSeconds = (activeTimer ?? 0) * 60;
 									if (timerInterval) {
@@ -199,7 +199,7 @@
 						type="text"
 						bind:value={postponeInput}
 						placeholder="e.g. tomorrow at 2pm"
-						class="flex-1 rounded border px-3 py-2"
+						class="flex-1 rounded-lg border border-neutral-200 bg-white px-4 py-2 shadow-inner transition-all duration-200 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 hover:border-neutral-300"
 					/>
 					<button
 						class="bg-secondary-500 hover:bg-secondary-600 rounded px-4 py-2 text-white transition-colors duration-200"
@@ -248,7 +248,7 @@
 
 	<!-- Add Task Button -->
 	<button
-		class="bg-primary-500 hover:bg-primary-600 fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg transition-all duration-200 hover:shadow-xl"
+		class="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full border border-primary-600 bg-gradient-to-b from-primary-400 to-primary-500 text-white shadow-[0_4px_6px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.1)] transition-all duration-200 hover:from-primary-500 hover:to-primary-600 hover:shadow-[0_6px_8px_rgba(0,0,0,0.12),0_3px_6px_rgba(0,0,0,0.12)] active:translate-y-0.5 active:shadow-none"
 		aria-label="Add tasks"
 		on:click={() => (showAddTaskModal = true)}
 		title="Add tasks"
@@ -267,11 +267,11 @@
 	<!-- Add Task Modal -->
 	{#if showAddTaskModal}
 		<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-			<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+			<div class="w-full max-w-md rounded-lg border border-neutral-200 bg-gradient-to-br from-white to-neutral-50 p-6 shadow-[0_4px_8px_rgba(0,0,0,0.1),0_8px_16px_rgba(0,0,0,0.1)]">
 				<h2 class="mb-4 text-xl font-bold">Add Tasks</h2>
 				<p class="mb-2 text-sm text-gray-600">Enter one task per line</p>
 				<textarea
-					class="mb-4 h-32 w-full rounded border p-2"
+					class="mb-4 h-32 w-full rounded-lg border border-neutral-200 bg-white p-4 shadow-inner transition-all duration-200 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 hover:border-neutral-300"
 					placeholder="Buy groceries&#10;Call dentist&#10;Write report"
 					bind:value={newTaskInput}
 					on:keydown={(e) => {

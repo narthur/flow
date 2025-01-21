@@ -8,6 +8,9 @@ export default {
 
 	theme: {
 		extend: {
+			boxShadow: {
+				inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+			},
 			colors: {
 				primary: {
 					50: '#f0f9ff',
