@@ -23,10 +23,13 @@ function createSettingsStore() {
 
     return {
         subscribe,
-        toggleTimerSound: () => update(settings => ({ 
-            ...settings, 
-            timerSound: !settings.timerSound 
-        })),
+        toggleTimerSound: () => {
+            console.log('Toggling timer sound');
+            update(settings => ({ 
+                ...settings, 
+                timerSound: !settings.timerSound 
+            }));
+        },
         setTheme: (theme: Settings['theme']) => update(settings => ({
             ...settings,
             theme

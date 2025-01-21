@@ -9,9 +9,13 @@
         ($settings.theme === 'system' && systemDarkMode.matches)
     );
 
-    // Apply dark mode class to html element
+    // Apply dark mode class to html element and add transition
     $effect(() => {
+        document.documentElement.classList.add('transition-colors');
         document.documentElement.classList.toggle('dark', isDarkMode);
+        setTimeout(() => {
+            document.documentElement.classList.remove('transition-colors');
+        }, 1000);
     });
 </script>
 
