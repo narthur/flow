@@ -26,13 +26,41 @@
 	<div class="space-y-4">
 		{#each $tasks as task}
 			<div class="rounded-lg bg-white p-4 shadow-md">
-				<h2 class="text-lg font-semibold text-neutral-800">{task.title}</h2>
-				{#if task.notes}
-					<p class="mt-2 text-neutral-600">{task.notes}</p>
-				{/if}
-				<div class="mt-2 text-sm text-neutral-500">
-					Postponed until: {formatDate(task.postponedUntil)}
+				<div class="flex items-start justify-between">
+					<div>
+						<h2 class="text-lg font-semibold text-neutral-800">{task.title}</h2>
+						{#if task.notes}
+							<p class="mt-2 text-neutral-600">{task.notes}</p>
+						{/if}
+					</div>
+					<div class="text-sm font-medium">
+						{#if task.stats.status === 'postponed'}
+							<span class="rounded-full bg-primary-50 px-2 py-1 text-primary-700">Postponed</span>
+						{:else if task.stats.status === 'completed'}
+							<span class="rounded-full bg-neutral-100 px-2 py-1 text-neutral-700">Completed</span>
+						{:else}
+							<span class="rounded-full bg-neutral-100 px-2 py-1 text-neutral-700">Active</span>
+						{/if}
+					</div>
 				</div>
+
+				<div class="mt-4 flex gap-6 text-sm text-neutral-600">
+					<div>
+						<span class="font-medium">{task.stats.sessionCount}</span> sessions
+					</div>
+					<div>
+						<span class="font-medium">{task.stats.totalMinutes}</span> minutes
+					</div>
+					<div>
+						<span class="font-medium">{task.stats.postponeCount}</span> postponements
+					</div>
+				</div>
+
+				{#if task.postponedUntil}
+					<div class="mt-2 text-sm text-neutral-500">
+						Next available: {formatDate(task.postponedUntil)}
+					</div>
+				{/if}
 			</div>
 		{:else}
 			<div class="text-center text-neutral-600">

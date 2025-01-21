@@ -7,15 +7,48 @@ export interface Task {
     description?: string;
     postponedUntil?: Date;
     notes?: string;
+    stats: {
+        sessionCount: number;
+        totalMinutes: number;
+        postponeCount: number;
+        status: 'active' | 'postponed' | 'completed';
+    };
 }
 
 function createTaskStore() {
     // Load initial tasks from localStorage or use defaults
     const storedTasks = localStorage.getItem('tasks');
     const initialTasks: Task[] = storedTasks ? JSON.parse(storedTasks) : [
-        { id: '1', title: 'Learn Svelte' },
-        { id: '2', title: 'Build a task manager' },
-        { id: '3', title: 'Write documentation' }
+        { 
+            id: '1', 
+            title: 'Learn Svelte',
+            stats: {
+                sessionCount: 0,
+                totalMinutes: 0,
+                postponeCount: 0,
+                status: 'active'
+            }
+        },
+        { 
+            id: '2', 
+            title: 'Build a task manager',
+            stats: {
+                sessionCount: 0,
+                totalMinutes: 0,
+                postponeCount: 0,
+                status: 'active'
+            }
+        },
+        { 
+            id: '3', 
+            title: 'Write documentation',
+            stats: {
+                sessionCount: 0,
+                totalMinutes: 0,
+                postponeCount: 0,
+                status: 'active'
+            }
+        }
     ];
 
     // Convert ISO date strings back to Date objects
@@ -40,7 +73,15 @@ function createTaskStore() {
 
             update(tasks => tasks.map(task => 
                 task.id === taskId 
-                    ? { ...task, postponedUntil: parsedDate }
+                    ? { 
+                        ...task, 
+                        postponedUntil: parsedDate,
+                        stats: {
+                            ...task.stats,
+                            postponeCount: task.stats.postponeCount + 1,
+                            status: 'postponed' as const
+                        }
+                    }
                     : task
             ));
             return true;
@@ -49,7 +90,13 @@ function createTaskStore() {
             update(tasks => {
                 const task = tasks.find(t => t.id === taskId);
                 if (!task) return tasks;
-                return [...tasks.filter(t => t.id !== taskId), { ...task }];
+                return [...tasks.filter(t => t.id !== taskId), { 
+                    ...task,
+                    stats: {
+                        ...task.stats,
+                        status: 'active'
+                    }
+                }];
             });
         },
         updateNotes: (taskId: string, notes: string) => {
@@ -68,14 +115,33 @@ function createTaskStore() {
         },
         addTask: (title: string = 'New Task') => {
             const id = crypto.randomUUID();
-            update(tasks => [...tasks, { id, title }]);
+            update(tasks => [...tasks, { 
+                id, 
+                title,
+                stats: {
+                    sessionCount: 0,
+                    totalMinutes: 0,
+                    postponeCount: 0,
+                    status: 'active'
+                }
+            }]);
             return id;
         },
         deleteTask: (taskId: string) => {
             update(tasks => tasks.filter(task => task.id !== taskId));
         },
         completeTask: (taskId: string) => {
-            update(tasks => tasks.filter(task => task.id !== taskId));
+            update(tasks => tasks.map(task => 
+                task.id === taskId
+                    ? { 
+                        ...task,
+                        stats: {
+                            ...task.stats,
+                            status: 'completed' as const
+                        }
+                    }
+                    : task
+            ));
         },
         importTasks: (text: string) => {
             const newTasks = text
@@ -84,7 +150,13 @@ function createTaskStore() {
                 .filter(line => line.length > 0)
                 .map(title => ({
                     id: crypto.randomUUID(),
-                    title
+                    title,
+                    stats: {
+                        sessionCount: 0,
+                        totalMinutes: 0,
+                        postponeCount: 0,
+                        status: 'active' as const
+                    }
                 }));
             
             update(tasks => [...tasks, ...newTasks]);
