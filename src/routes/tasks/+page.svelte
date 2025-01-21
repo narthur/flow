@@ -15,7 +15,37 @@
 
 <div class="mx-auto max-w-2xl p-6 pt-12">
 	<header class="mb-8 flex items-center justify-between">
-		<h1 class="text-2xl font-bold text-neutral-800">All Tasks</h1>
+		<div class="flex items-center gap-4">
+			<h1 class="text-2xl font-bold text-neutral-800">All Tasks</h1>
+			<div class="flex gap-2">
+				<button
+					class="text-primary-600 hover:text-primary-700 text-sm font-medium transition-colors duration-200"
+					on:click={() => {
+						const text = $tasks
+							.map(task => task.title)
+							.join('\n');
+						navigator.clipboard.writeText(text)
+							.then(() => alert('Tasks copied to clipboard!'))
+							.catch(() => alert('Failed to copy tasks'));
+					}}
+				>
+					Export
+				</button>
+				<span class="text-neutral-300">|</span>
+				<button
+					class="text-primary-600 hover:text-primary-700 text-sm font-medium transition-colors duration-200"
+					on:click={() => {
+						const text = prompt('Paste your tasks (one per line):');
+						if (text) {
+							const count = tasks.importTasks(text);
+							alert(`Imported ${count} tasks`);
+						}
+					}}
+				>
+					Import
+				</button>
+			</div>
+		</div>
 		<nav>
 			<a href="/" class="inline-block">
 				<Button>Back to Timer</Button>
