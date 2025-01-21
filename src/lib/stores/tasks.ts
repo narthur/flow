@@ -76,6 +76,19 @@ function createTaskStore() {
         },
         completeTask: (taskId: string) => {
             update(tasks => tasks.filter(task => task.id !== taskId));
+        },
+        importTasks: (text: string) => {
+            const newTasks = text
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0)
+                .map(title => ({
+                    id: crypto.randomUUID(),
+                    title
+                }));
+            
+            update(tasks => [...tasks, ...newTasks]);
+            return newTasks.length;
         }
     };
 }

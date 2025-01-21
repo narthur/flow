@@ -17,6 +17,21 @@
 	let activeTimer: number | null = null;
 	let remainingSeconds = 0;
 	let timerInterval: ReturnType<typeof setInterval> | null = null;
+	let showAddTaskModal = false;
+	let newTaskInput = '';
+
+	function handleAddTasks() {
+		if (newTaskInput.trim()) {
+			const count = tasks.importTasks(newTaskInput);
+			if (count === 1) {
+				console.log('Added 1 task');
+			} else {
+				console.log(`Added ${count} tasks`);
+			}
+		}
+		showAddTaskModal = false;
+		newTaskInput = '';
+	}
 
 	// Get the first non-postponed task
 	$: {
@@ -78,8 +93,8 @@
 			<input
 				type="text"
 				class="mb-4 w-full rounded bg-transparent px-1 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
-				value={currentTask.title}
-				on:input={(e) => tasks.updateTitle(currentTask.id, e.currentTarget.value)}
+				value={currentTask?.title ?? ''}
+				on:input={(e) => currentTask && tasks.updateTitle(currentTask.id, e.currentTarget.value)}
 			/>
 			{#if currentTask.description}
 				<p class="mb-6 text-gray-600">{currentTask.description}</p>
@@ -92,9 +107,9 @@
 					rows="3"
 					class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
 					placeholder="Add notes about this task..."
-					value={currentTask.notes ?? ''}
-					on:input={(e) => tasks.updateNotes(currentTask.id, e.currentTarget.value)}
-				/>
+					value={currentTask?.notes ?? ''}
+					on:input={(e) => currentTask && tasks.updateNotes(currentTask.id, e.currentTarget.value)}
+				></textarea>
 			</div>
 
 			<div class="space-y-4">
@@ -143,7 +158,7 @@
 						class="flex-1 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
 						on:click={() => {
 							if (confirm('Are you sure you want to delete this task?')) {
-								tasks.deleteTask(currentTask.id);
+								currentTask && tasks.deleteTask(currentTask.id);
 							}
 						}}
 					>
@@ -151,7 +166,7 @@
 					</button>
 					<button
 						class="flex-1 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
-						on:click={() => tasks.completeTask(currentTask.id)}
+						on:click={() => currentTask && tasks.completeTask(currentTask.id)}
 					>
 						Complete
 					</button>
@@ -172,18 +187,12 @@
 		</div>
 	{/if}
 
-	<!-- Floating Action Button -->
+	<!-- Add Task Button -->
 	<button
 		class="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600"
-		aria-label="Add new task"
-		on:click={() => {
-			const title = prompt('What task would you like to add?');
-			if (title) {
-				const id = tasks.addTask(title);
-				console.log('Added new task with id:', id);
-			}
-		}}
-		title="Add new task"
+		aria-label="Add tasks"
+		on:click={() => showAddTaskModal = true}
+		title="Add tasks"
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -195,4 +204,41 @@
 			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
 		</svg>
 	</button>
+
+	<!-- Add Task Modal -->
+	{#if showAddTaskModal}
+		<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+			<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+				<h2 class="mb-4 text-xl font-bold">Add Tasks</h2>
+				<p class="mb-2 text-sm text-gray-600">Enter one task per line</p>
+				<textarea
+					class="mb-4 h-32 w-full rounded border p-2"
+					placeholder="Buy groceries&#10;Call dentist&#10;Write report"
+					bind:value={newTaskInput}
+					on:keydown={(e) => {
+						if (e.key === 'Enter' && e.ctrlKey) {
+							handleAddTasks();
+						}
+					}}
+				></textarea>
+				<div class="flex justify-end gap-2">
+					<button
+						class="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
+						on:click={() => {
+							showAddTaskModal = false;
+							newTaskInput = '';
+						}}
+					>
+						Cancel
+					</button>
+					<button
+						class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+						on:click={handleAddTasks}
+					>
+						Add Tasks
+					</button>
+				</div>
+			</div>
+		</div>
+	{/if}
 </div>
