@@ -167,8 +167,8 @@
 									Resume
 								</Button>
 							{/if}
-							<button
-								class="bg-primary-50 text-primary-700 hover:bg-primary-100 rounded px-4 py-2 transition-colors duration-200"
+							<Button
+								variant="secondary"
 								on:click={() => {
 									remainingSeconds = (activeTimer ?? 0) * 60;
 									if (timerInterval) {
@@ -178,7 +178,7 @@
 								}}
 							>
 								Reset
-							</button>
+							</Button>
 							<button
 								class="rounded bg-neutral-100 px-4 py-2 text-neutral-700 hover:bg-neutral-200"
 								on:click={() => {
@@ -197,12 +197,12 @@
 				{:else}
 					<div class="flex flex-wrap gap-2">
 						{#each timeOptions as option}
-							<button
-								class="bg-primary-600 hover:bg-primary-700 rounded px-4 py-2 text-white transition-colors duration-200"
+							<Button
+								variant="secondary"
 								on:click={() => startTimer(option.minutes)}
 							>
 								{option.label}
-							</button>
+							</Button>
 						{/each}
 					</div>
 				{/if}
@@ -214,12 +214,12 @@
 						placeholder="e.g. tomorrow at 2pm"
 						class="focus:border-primary-500 focus:ring-primary-500 flex-1 rounded border-neutral-200 px-4 py-2 transition-colors duration-200 focus:ring-2"
 					/>
-					<button
-						class="bg-primary-600 hover:bg-primary-700 rounded px-4 py-2 text-white transition-colors duration-200"
+					<Button
+						variant="secondary"
 						on:click={handlePostpone}
 					>
 						Postpone
-					</button>
+					</Button>
 				</div>
 				{#if postponeError}
 					<p class="text-sm text-red-500">{postponeError}</p>
@@ -257,7 +257,7 @@
 
 	<!-- Add Task Button -->
 	<button
-		class="bg-primary-600 hover:bg-primary-700 fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full font-medium text-white shadow-md transition-all duration-200 hover:shadow-lg"
+		class="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full border border-primary-600 bg-primary-500 font-medium text-white shadow-md transition-all duration-200 hover:bg-primary-600 hover:shadow-lg"
 		aria-label="Add tasks"
 		on:click={() => (showAddTaskModal = true)}
 		title="Add tasks"
