@@ -2,6 +2,7 @@
 	import chime from '$lib/chime';
 	import { tasks, type Task } from '$lib/stores/tasks';
 	import Button from '$lib/components/Button.svelte';
+	import { settings } from '$lib/stores/settings';
 
 	const timeOptions = [
 		{ label: '10 sec', minutes: 0.16666666666666666 },
@@ -56,7 +57,9 @@
 				}
 
 				timer.clear();
-				chime();
+				if ($settings.timerSound) {
+					chime();
+				}
 			}
 		}, 1000);
 	} else if (!$timer.isRunning && timerInterval) {
