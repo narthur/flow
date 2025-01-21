@@ -58,6 +58,13 @@ function createTaskStore() {
                     ? { ...task, notes }
                     : task
             ));
+        },
+        updateTitle: (taskId: string, title: string) => {
+            update(tasks => tasks.map(task =>
+                task.id === taskId
+                    ? { ...task, title }
+                    : task
+            ));
         }
     };
 }

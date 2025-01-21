@@ -75,7 +75,12 @@
 <div class="mx-auto max-w-2xl p-6">
 	{#if currentTask}
 		<div class="mb-6 rounded-lg bg-white p-6 shadow-lg">
-			<h2 class="mb-4 text-2xl font-bold">{currentTask.title}</h2>
+			<input
+				type="text"
+				class="mb-4 w-full bg-transparent text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-1"
+				value={currentTask.title}
+				on:input={(e) => tasks.updateTitle(currentTask.id, e.currentTarget.value)}
+			/>
 			{#if currentTask.description}
 				<p class="mb-6 text-gray-600">{currentTask.description}</p>
 			{/if}
