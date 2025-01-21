@@ -188,7 +188,7 @@
 					</div>
 				{:else}
 					<div>
-						<h3 class="mb-3 text-sm font-medium text-neutral-600">Start working timer:</h3>
+						<h3 class="mb-3 text-sm font-medium text-neutral-700 dark:text-neutral-300">Start working timer:</h3>
 						<div class="flex flex-wrap gap-2">
 							{#each timeOptions as option}
 								<Button variant="secondary" on:click={() => startTimer(option.minutes)}>
@@ -200,14 +200,14 @@
 				{/if}
 
 				<div class="space-y-4">
-					<h3 class="text-sm font-medium text-neutral-600">Move on by:</h3>
+					<h3 class="text-sm font-medium text-neutral-700 dark:text-neutral-300">Move on by:</h3>
 
 					<div class="flex gap-2">
 						<input
 							type="text"
 							bind:value={postponeInput}
 							placeholder="e.g. tomorrow at 2pm"
-							class="focus:border-primary-500 focus:ring-primary-500 flex-1 rounded border-neutral-200 px-4 py-2 transition-colors duration-200 focus:ring-2"
+							class="focus:border-primary-500 focus:ring-primary-500 flex-1 rounded border-neutral-200 px-4 py-2 transition-colors duration-200 focus:ring-2 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500 dark:placeholder:text-neutral-500"
 						/>
 						<Button on:click={handlePostpone}>Postpone</Button>
 					</div>
