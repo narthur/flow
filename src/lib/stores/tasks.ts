@@ -86,7 +86,7 @@ function createTaskStore() {
             ));
             return true;
         },
-        punt: (taskId: string) => {
+        punt: (taskId: string, sessionMinutes: number = 0) => {
             update(tasks => {
                 const task = tasks.find(t => t.id === taskId);
                 if (!task) return tasks;
@@ -94,7 +94,9 @@ function createTaskStore() {
                     ...task,
                     stats: {
                         ...task.stats,
-                        status: 'active'
+                        status: 'active',
+                        sessionCount: sessionMinutes > 0 ? task.stats.sessionCount + 1 : task.stats.sessionCount,
+                        totalMinutes: task.stats.totalMinutes + sessionMinutes
                     }
                 }];
             });

@@ -84,7 +84,22 @@
 
 	function handlePunt() {
 		if (!currentTask) return;
-		tasks.punt(currentTask.id);
+		
+		// Calculate session time if timer was active
+		const sessionMinutes = activeTimer ? 
+			Math.round((activeTimer * 60 - remainingSeconds) / 60) : 
+			0;
+
+		// Clear timer if active
+		if (timerInterval) {
+			clearInterval(timerInterval);
+			timerInterval = null;
+		}
+		activeTimer = null;
+		remainingSeconds = 0;
+
+		// Punt task with session stats
+		tasks.punt(currentTask.id, sessionMinutes);
 	}
 </script>
 
