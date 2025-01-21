@@ -96,11 +96,11 @@
 
 	function handlePunt() {
 		if (!currentTask) return;
-		
+
 		// Calculate session time if timer was active
-		const sessionMinutes = $timer.activeTimer ? 
-			Math.round(($timer.activeTimer * 60 - $timer.remainingSeconds) / 60) : 
-			0;
+		const sessionMinutes = $timer.activeTimer
+			? Math.round(($timer.activeTimer * 60 - $timer.remainingSeconds) / 60)
+			: 0;
 
 		// Clear timer if active
 		if (timerInterval) {
@@ -119,10 +119,13 @@
 		<h1 class="text-2xl font-bold text-neutral-800 dark:text-neutral-100">Timer</h1>
 	</header>
 
-	{#if currentTask}		<div class="mb-6 rounded-lg bg-white p-6 shadow-md transition-shadow duration-200 hover:shadow-lg dark:bg-neutral-800">
+	{#if currentTask}
+		<div
+			class="mb-6 rounded-lg bg-white p-6 shadow-md transition-shadow duration-200 hover:shadow-lg dark:bg-neutral-800"
+		>
 			<input
 				type="text"
-				class="mb-4 w-full rounded bg-transparent px-3 py-2 text-2xl font-bold transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-primary-500 border border-transparent hover:border-neutral-200 shadow-sm dark:text-neutral-100"
+				class="mb-4 w-full rounded border border-transparent bg-transparent px-3 py-2 text-2xl font-bold shadow-sm transition-all duration-200 hover:border-neutral-200 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:text-neutral-100"
 				value={currentTask?.title ?? ''}
 				on:input={(e) => currentTask && tasks.updateTitle(currentTask.id, e.currentTarget.value)}
 			/>
@@ -131,11 +134,14 @@
 			{/if}
 
 			<div class="mb-8">
-				<label for="notes" class="mb-2 block text-sm font-medium text-neutral-700 dark:text-neutral-300">Notes</label>
+				<label
+					for="notes"
+					class="mb-2 block text-sm font-medium text-neutral-700 dark:text-neutral-300">Notes</label
+				>
 				<textarea
 					id="notes"
 					rows="3"
-					class="focus:border-primary-500 focus:ring-primary-500 w-full resize-none rounded-lg border-neutral-200 bg-white px-4 py-3 transition-colors duration-200 focus:ring-2 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100"
+					class="w-full resize-none rounded-lg border-neutral-200 bg-white px-4 py-3 transition-colors duration-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100"
 					placeholder="Add notes about this task..."
 					value={currentTask?.notes ?? ''}
 					on:input={(e) => currentTask && tasks.updateNotes(currentTask.id, e.currentTarget.value)}
@@ -146,7 +152,7 @@
 				{#if $timer.activeTimer}
 					<div class="py-6 text-center">
 						<div
-							class="text-primary-600 font-mono text-4xl font-bold transition-colors duration-200"
+							class="font-mono text-4xl font-bold text-primary-600 transition-colors duration-200"
 						>
 							{formatTime($timer.remainingSeconds)}
 						</div>
@@ -155,24 +161,11 @@
 						</div>
 						<div class="mt-6 flex justify-center gap-2">
 							{#if $timer.isRunning}
-								<Button
-									on:click={() => timer.pause()}
-								>
-									Pause
-								</Button>
+								<Button on:click={() => timer.pause()}>Pause</Button>
 							{:else}
-								<Button
-									variant="secondary"
-									on:click={() => timer.resume()}
-								>
-									Resume
-								</Button>
+								<Button variant="secondary" on:click={() => timer.resume()}>Resume</Button>
 							{/if}
-							<Button
-								on:click={() => timer.reset()}
-							>
-								Reset
-							</Button>
+							<Button on:click={() => timer.reset()}>Reset</Button>
 							<Button
 								on:click={() => {
 									if (timerInterval) {
@@ -188,7 +181,9 @@
 					</div>
 				{:else}
 					<div>
-						<h3 class="mb-3 text-sm font-medium text-neutral-700 dark:text-neutral-300">Start working timer:</h3>
+						<h3 class="mb-3 text-sm font-medium text-neutral-700 dark:text-neutral-300">
+							Start working timer:
+						</h3>
 						<div class="flex flex-wrap gap-2">
 							{#each timeOptions as option}
 								<Button variant="secondary" on:click={() => startTimer(option.minutes)}>
@@ -207,7 +202,7 @@
 							type="text"
 							bind:value={postponeInput}
 							placeholder="e.g. tomorrow at 2pm"
-							class="focus:border-primary-500 focus:ring-primary-500 flex-1 rounded border-neutral-200 px-4 py-2 transition-colors duration-200 focus:ring-2 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500 dark:placeholder:text-neutral-500"
+							class="flex-1 rounded border-neutral-200 px-4 py-2 transition-colors duration-200 placeholder:text-neutral-500 focus:border-primary-500 focus:ring-2 focus:ring-primary-500 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:placeholder:text-neutral-500"
 						/>
 						<Button on:click={handlePostpone}>Postpone</Button>
 					</div>
@@ -231,10 +226,12 @@
 							flex
 							on:click={() => {
 								if (!currentTask) return;
-								
+
 								// Record final session if timer was active
 								if ($timer.activeTimer) {
-									const sessionMinutes = Math.round(($timer.activeTimer * 60 - $timer.remainingSeconds) / 60);
+									const sessionMinutes = Math.round(
+										($timer.activeTimer * 60 - $timer.remainingSeconds) / 60
+									);
 									tasks.recordSession(currentTask.id, sessionMinutes);
 								}
 
@@ -257,14 +254,18 @@
 		</div>
 	{:else}
 		<div class="py-12 text-center">
-			<h2 class="text-2xl font-bold text-neutral-700 dark:text-neutral-300">No tasks available right now</h2>
-			<p class="mt-2 text-neutral-500 dark:text-neutral-400">All tasks are either completed or postponed</p>
+			<h2 class="text-2xl font-bold text-neutral-700 dark:text-neutral-300">
+				No tasks available right now
+			</h2>
+			<p class="mt-2 text-neutral-500 dark:text-neutral-400">
+				All tasks are either completed or postponed
+			</p>
 		</div>
 	{/if}
 
 	<!-- Add Task Button -->
 	<button
-		class="border-primary-600 bg-primary-500 hover:bg-primary-600 fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full border font-medium text-white shadow-md transition-all duration-200 hover:shadow-lg"
+		class="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full border border-primary-600 bg-primary-500 font-medium text-white shadow-md transition-all duration-200 hover:bg-primary-600 hover:shadow-lg"
 		aria-label="Add tasks"
 		on:click={() => (showAddTaskModal = true)}
 		title="Add tasks"
@@ -287,7 +288,7 @@
 				<h2 class="mb-4 text-xl font-bold">Add Tasks</h2>
 				<p class="mb-2 text-sm text-gray-600">Enter one task per line</p>
 				<textarea
-					class="focus:border-primary-500 focus:ring-primary-500 mb-4 h-32 w-full resize-none rounded border p-4 transition-colors duration-200 focus:ring-2"
+					class="mb-4 h-32 w-full resize-none rounded border p-4 transition-colors duration-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500"
 					placeholder="Buy groceries&#10;Call dentist&#10;Write report"
 					bind:value={newTaskInput}
 					on:keydown={(e) => {

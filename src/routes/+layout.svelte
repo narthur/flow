@@ -6,13 +6,16 @@
 	const navItems = [
 		{ href: '/', label: 'Timer' },
 		{ href: '/tasks', label: 'Tasks' },
-		{ href: '/settings', label: 'Settings' }
+		{ href: '/settings', label: 'Settings' },
+		{ href: '/stats', label: 'Stats' }
 	];
 
 	const currentPath = $derived($page.url.pathname);
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-950 dark:to-neutral-900">
+<div
+	class="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-neutral-950 dark:to-neutral-900"
+>
 	<nav class="border-b border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900">
 		<div class="mx-auto max-w-2xl px-6">
 			<div class="flex h-14 items-center gap-6">

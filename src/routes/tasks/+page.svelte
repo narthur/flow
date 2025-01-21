@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { tasks } from '$lib/stores/tasks';
-	import Button from '$lib/components/Button.svelte';
 
 	function formatDate(date: Date | undefined): string {
 		if (!date) return 'Not postponed';
@@ -17,12 +16,11 @@
 	<header class="mb-8">
 		<div class="flex items-center justify-between">
 			<h1 class="text-2xl font-bold text-neutral-800">All Tasks</h1>
-
 		</div>
 
 		<div class="flex gap-2">
 			<button
-				class="text-primary-600 hover:text-primary-700 text-sm font-medium transition-colors duration-200"
+				class="text-sm font-medium text-primary-600 transition-colors duration-200 hover:text-primary-700"
 				on:click={() => {
 					const text = $tasks.map((task) => task.title).join('\n');
 					navigator.clipboard
@@ -35,7 +33,7 @@
 			</button>
 			<span class="text-neutral-300">|</span>
 			<button
-				class="text-primary-600 hover:text-primary-700 text-sm font-medium transition-colors duration-200"
+				class="text-sm font-medium text-primary-600 transition-colors duration-200 hover:text-primary-700"
 				on:click={() => {
 					const text = prompt('Paste your tasks (one per line):');
 					if (text) {
@@ -61,7 +59,7 @@
 					</div>
 					<div class="text-sm font-medium">
 						{#if task.stats.status === 'postponed'}
-							<span class="bg-primary-50 text-primary-700 rounded-full px-2 py-1">Postponed</span>
+							<span class="rounded-full bg-primary-50 px-2 py-1 text-primary-700">Postponed</span>
 						{:else if task.stats.status === 'completed'}
 							<span class="rounded-full bg-neutral-100 px-2 py-1 text-neutral-700">Completed</span>
 						{:else}
