@@ -107,7 +107,7 @@
 		>
 			<input
 				type="text"
-				class="focus:ring-primary-500 mb-4 w-full rounded bg-transparent px-3 py-2 text-2xl font-bold transition-colors duration-200 focus:outline-none focus:ring-2"
+				class="mb-4 w-full rounded bg-transparent px-3 py-2 text-2xl font-bold transition-all duration-200 focus:outline-none focus:ring-1 focus:ring-primary-500 border border-transparent hover:border-neutral-200 shadow-sm"
 				value={currentTask?.title ?? ''}
 				on:input={(e) => currentTask && tasks.updateTitle(currentTask.id, e.currentTarget.value)}
 			/>
