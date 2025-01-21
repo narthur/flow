@@ -89,10 +89,12 @@
 
 <div class="relative mx-auto max-w-2xl p-6">
 	{#if currentTask}
-		<div class="mb-6 rounded-lg bg-white p-6 shadow-lg">
+		<div
+			class="mb-6 rounded-lg bg-white p-6 shadow-lg transition-shadow duration-200 hover:shadow-xl"
+		>
 			<input
 				type="text"
-				class="mb-4 w-full rounded bg-transparent px-1 text-2xl font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+				class="focus:ring-primary-500 mb-4 w-full rounded bg-transparent px-1 text-2xl font-bold transition-colors duration-200 focus:outline-none focus:ring-2"
 				value={currentTask?.title ?? ''}
 				on:input={(e) => currentTask && tasks.updateTitle(currentTask.id, e.currentTarget.value)}
 			/>
@@ -105,7 +107,7 @@
 				<textarea
 					id="notes"
 					rows="3"
-					class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+					class="focus:border-primary-500 focus:ring-primary-500 w-full rounded-md border-neutral-300 shadow-sm transition-colors duration-200"
 					placeholder="Add notes about this task..."
 					value={currentTask?.notes ?? ''}
 					on:input={(e) => currentTask && tasks.updateNotes(currentTask.id, e.currentTarget.value)}
@@ -115,7 +117,7 @@
 			<div class="space-y-4">
 				{#if activeTimer}
 					<div class="py-4 text-center">
-						<div class="font-mono text-4xl font-bold text-blue-600">
+						<div class="text-primary-600 font-mono text-4xl font-bold">
 							{formatTime(remainingSeconds)}
 						</div>
 						<div class="mt-2 text-gray-500">
@@ -124,7 +126,7 @@
 						<div class="mt-4 flex justify-center gap-2">
 							{#if timerInterval}
 								<button
-									class="rounded bg-yellow-500 px-4 py-2 text-white hover:bg-yellow-600"
+									class="bg-warning-500 hover:bg-warning-600 rounded px-4 py-2 text-white transition-colors duration-200"
 									on:click={() => {
 										if (timerInterval) {
 											clearInterval(timerInterval);
@@ -136,7 +138,7 @@
 								</button>
 							{:else}
 								<button
-									class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+									class="bg-secondary-500 hover:bg-secondary-600 rounded px-4 py-2 text-white transition-colors duration-200"
 									on:click={() => {
 										timerInterval = setInterval(() => {
 											remainingSeconds--;
@@ -153,9 +155,9 @@
 								</button>
 							{/if}
 							<button
-								class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+								class="bg-primary-500 hover:bg-primary-600 rounded px-4 py-2 text-white transition-colors duration-200"
 								on:click={() => {
-									remainingSeconds = activeTimer * 60;
+									remainingSeconds = (activeTimer ?? 0) * 60;
 									if (timerInterval) {
 										clearInterval(timerInterval);
 										timerInterval = null;
@@ -165,7 +167,7 @@
 								Reset
 							</button>
 							<button
-								class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+								class="bg-danger-500 hover:bg-danger-600 rounded px-4 py-2 text-white transition-colors duration-200"
 								on:click={() => {
 									if (timerInterval) {
 										clearInterval(timerInterval);
@@ -183,7 +185,7 @@
 					<div class="flex flex-wrap gap-2">
 						{#each timeOptions as option}
 							<button
-								class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+								class="bg-primary-500 hover:bg-primary-600 rounded px-4 py-2 text-white transition-colors duration-200"
 								on:click={() => startTimer(option.minutes)}
 							>
 								{option.label}
@@ -200,7 +202,7 @@
 						class="flex-1 rounded border px-3 py-2"
 					/>
 					<button
-						class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+						class="bg-secondary-500 hover:bg-secondary-600 rounded px-4 py-2 text-white transition-colors duration-200"
 						on:click={handlePostpone}
 					>
 						Postpone
@@ -212,17 +214,17 @@
 
 				<div class="flex gap-2">
 					<button
-						class="flex-1 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+						class="bg-danger-500 hover:bg-danger-600 flex-1 rounded px-4 py-2 text-white transition-colors duration-200"
 						on:click={() => {
-							if (confirm('Are you sure you want to delete this task?')) {
-								currentTask && tasks.deleteTask(currentTask.id);
+							if (confirm('Are you sure you want to delete this task?') && currentTask) {
+								tasks.deleteTask(currentTask.id);
 							}
 						}}
 					>
 						Delete
 					</button>
 					<button
-						class="flex-1 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+						class="bg-secondary-500 hover:bg-secondary-600 flex-1 rounded px-4 py-2 text-white transition-colors duration-200"
 						on:click={() => currentTask && tasks.completeTask(currentTask.id)}
 					>
 						Complete
@@ -230,7 +232,7 @@
 				</div>
 
 				<button
-					class="w-full rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
+					class="w-full rounded bg-neutral-200 px-4 py-2 transition-colors duration-200 hover:bg-neutral-300"
 					on:click={handlePunt}
 				>
 					Skip for now
@@ -246,9 +248,9 @@
 
 	<!-- Add Task Button -->
 	<button
-		class="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500 text-white shadow-lg hover:bg-blue-600"
+		class="bg-primary-500 hover:bg-primary-600 fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg transition-all duration-200 hover:shadow-xl"
 		aria-label="Add tasks"
-		on:click={() => showAddTaskModal = true}
+		on:click={() => (showAddTaskModal = true)}
 		title="Add tasks"
 	>
 		<svg
@@ -280,7 +282,7 @@
 				></textarea>
 				<div class="flex justify-end gap-2">
 					<button
-						class="rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
+						class="rounded bg-neutral-200 px-4 py-2 transition-colors duration-200 hover:bg-neutral-300"
 						on:click={() => {
 							showAddTaskModal = false;
 							newTaskInput = '';
@@ -289,7 +291,7 @@
 						Cancel
 					</button>
 					<button
-						class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+						class="bg-primary-500 hover:bg-primary-600 rounded px-4 py-2 text-white transition-colors duration-200"
 						on:click={handleAddTasks}
 					>
 						Add Tasks
