@@ -121,6 +121,63 @@
 						<div class="mt-2 text-gray-500">
 							Working for {activeTimer} minutes
 						</div>
+						<div class="mt-4 flex justify-center gap-2">
+							{#if timerInterval}
+								<button
+									class="rounded bg-yellow-500 px-4 py-2 text-white hover:bg-yellow-600"
+									on:click={() => {
+										if (timerInterval) {
+											clearInterval(timerInterval);
+											timerInterval = null;
+										}
+									}}
+								>
+									Pause
+								</button>
+							{:else}
+								<button
+									class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+									on:click={() => {
+										timerInterval = setInterval(() => {
+											remainingSeconds--;
+											if (remainingSeconds <= 0) {
+												if (timerInterval) clearInterval(timerInterval);
+												timerInterval = null;
+												activeTimer = null;
+												chime();
+											}
+										}, 1000);
+									}}
+								>
+									Resume
+								</button>
+							{/if}
+							<button
+								class="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+								on:click={() => {
+									remainingSeconds = activeTimer * 60;
+									if (timerInterval) {
+										clearInterval(timerInterval);
+										timerInterval = null;
+									}
+								}}
+							>
+								Reset
+							</button>
+							<button
+								class="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+								on:click={() => {
+									if (timerInterval) {
+										clearInterval(timerInterval);
+										timerInterval = null;
+									}
+									activeTimer = null;
+									remainingSeconds = 0;
+								}}
+							>
+								Cancel
+							</button>
+						</div>
 					</div>
 				{:else}
 					<div class="flex flex-wrap gap-2">
