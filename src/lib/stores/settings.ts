@@ -2,13 +2,17 @@ import { writable } from 'svelte/store';
 
 interface Settings {
     timerSound: boolean;
+    theme: 'light' | 'dark' | 'system';
 }
 
 function createSettingsStore() {
     const storedSettings = localStorage.getItem('settings');
     const initialSettings: Settings = storedSettings 
         ? JSON.parse(storedSettings)
-        : { timerSound: true };
+        : { 
+            timerSound: true,
+            theme: 'system'
+        };
 
     const { subscribe, set, update } = writable<Settings>(initialSettings);
 
@@ -22,6 +26,10 @@ function createSettingsStore() {
         toggleTimerSound: () => update(settings => ({ 
             ...settings, 
             timerSound: !settings.timerSound 
+        })),
+        setTheme: (theme: Settings['theme']) => update(settings => ({
+            ...settings,
+            theme
         }))
     };
 }
