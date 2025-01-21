@@ -138,7 +138,7 @@
 								</button>
 							{:else}
 								<button
-									class="bg-secondary-500 hover:bg-secondary-600 rounded px-4 py-2 text-white transition-colors duration-200"
+									class="rounded-lg border border-secondary-600 bg-gradient-to-b from-secondary-400 to-secondary-500 px-4 py-2 text-white shadow-sm transition-all duration-200 hover:from-secondary-500 hover:to-secondary-600 active:translate-y-0.5 active:shadow-none"
 									on:click={() => {
 										timerInterval = setInterval(() => {
 											remainingSeconds--;
@@ -167,7 +167,7 @@
 								Reset
 							</button>
 							<button
-								class="bg-danger-500 hover:bg-danger-600 rounded px-4 py-2 text-white transition-colors duration-200"
+								class="rounded-lg border border-danger-600 bg-gradient-to-b from-danger-400 to-danger-500 px-4 py-2 text-white shadow-sm transition-all duration-200 hover:from-danger-500 hover:to-danger-600 active:translate-y-0.5 active:shadow-none"
 								on:click={() => {
 									if (timerInterval) {
 										clearInterval(timerInterval);
@@ -185,7 +185,7 @@
 					<div class="flex flex-wrap gap-2">
 						{#each timeOptions as option}
 							<button
-								class="bg-primary-500 hover:bg-primary-600 rounded px-4 py-2 text-white transition-colors duration-200"
+								class="rounded-lg border border-primary-600 bg-gradient-to-b from-primary-400 to-primary-500 px-4 py-2 text-white shadow-sm transition-all duration-200 hover:from-primary-500 hover:to-primary-600 active:translate-y-0.5 active:shadow-none"
 								on:click={() => startTimer(option.minutes)}
 							>
 								{option.label}
@@ -202,7 +202,7 @@
 						class="flex-1 rounded-lg border border-neutral-200 bg-white px-4 py-2 shadow-inner transition-all duration-200 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 hover:border-neutral-300"
 					/>
 					<button
-						class="bg-secondary-500 hover:bg-secondary-600 rounded px-4 py-2 text-white transition-colors duration-200"
+						class="rounded-lg border border-secondary-600 bg-gradient-to-b from-secondary-400 to-secondary-500 px-4 py-2 text-white shadow-sm transition-all duration-200 hover:from-secondary-500 hover:to-secondary-600 active:translate-y-0.5 active:shadow-none"
 						on:click={handlePostpone}
 					>
 						Postpone
@@ -214,7 +214,7 @@
 
 				<div class="flex gap-2">
 					<button
-						class="bg-danger-500 hover:bg-danger-600 flex-1 rounded px-4 py-2 text-white transition-colors duration-200"
+						class="flex-1 rounded-lg border border-danger-600 bg-gradient-to-b from-danger-400 to-danger-500 px-4 py-2 text-white shadow-sm transition-all duration-200 hover:from-danger-500 hover:to-danger-600 active:translate-y-0.5 active:shadow-none"
 						on:click={() => {
 							if (confirm('Are you sure you want to delete this task?') && currentTask) {
 								tasks.deleteTask(currentTask.id);
@@ -224,7 +224,7 @@
 						Delete
 					</button>
 					<button
-						class="bg-secondary-500 hover:bg-secondary-600 flex-1 rounded px-4 py-2 text-white transition-colors duration-200"
+						class="flex-1 rounded-lg border border-secondary-600 bg-gradient-to-b from-secondary-400 to-secondary-500 px-4 py-2 text-white shadow-sm transition-all duration-200 hover:from-secondary-500 hover:to-secondary-600 active:translate-y-0.5 active:shadow-none"
 						on:click={() => currentTask && tasks.completeTask(currentTask.id)}
 					>
 						Complete
@@ -232,7 +232,7 @@
 				</div>
 
 				<button
-					class="w-full rounded bg-neutral-200 px-4 py-2 transition-colors duration-200 hover:bg-neutral-300"
+					class="w-full rounded-lg border border-neutral-300 bg-gradient-to-b from-neutral-100 to-neutral-200 px-4 py-2 shadow-sm transition-all duration-200 hover:from-neutral-200 hover:to-neutral-300 active:translate-y-0.5 active:shadow-none"
 					on:click={handlePunt}
 				>
 					Skip for now
@@ -282,7 +282,7 @@
 				></textarea>
 				<div class="flex justify-end gap-2">
 					<button
-						class="rounded bg-neutral-200 px-4 py-2 transition-colors duration-200 hover:bg-neutral-300"
+						class="rounded-lg border border-neutral-300 bg-gradient-to-b from-neutral-100 to-neutral-200 px-4 py-2 shadow-sm transition-all duration-200 hover:from-neutral-200 hover:to-neutral-300 active:translate-y-0.5 active:shadow-none"
 						on:click={() => {
 							showAddTaskModal = false;
 							newTaskInput = '';
@@ -291,7 +291,7 @@
 						Cancel
 					</button>
 					<button
-						class="bg-primary-500 hover:bg-primary-600 rounded px-4 py-2 text-white transition-colors duration-200"
+						class="rounded-lg border border-primary-600 bg-gradient-to-b from-primary-400 to-primary-500 px-4 py-2 text-white shadow-sm transition-all duration-200 hover:from-primary-500 hover:to-primary-600 active:translate-y-0.5 active:shadow-none"
 						on:click={handleAddTasks}
 					>
 						Add Tasks
