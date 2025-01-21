@@ -115,7 +115,7 @@
 				<p class="mb-6 text-gray-600">{currentTask.description}</p>
 			{/if}
 
-			<div class="mb-6">
+			<div class="mb-8">
 				<label for="notes" class="mb-2 block text-sm font-medium text-gray-700">Notes</label>
 				<textarea
 					id="notes"
@@ -127,9 +127,9 @@
 				></textarea>
 			</div>
 
-			<div class="space-y-4">
+			<div class="space-y-6">
 				{#if activeTimer}
-					<div class="py-4 text-center">
+					<div class="py-6 text-center">
 						<div
 							class="text-primary-600 font-mono text-4xl font-bold transition-colors duration-200"
 						>
@@ -138,7 +138,7 @@
 						<div class="mt-2 text-gray-500">
 							Working for {activeTimer} minutes
 						</div>
-						<div class="mt-4 flex justify-center gap-2">
+						<div class="mt-6 flex justify-center gap-2">
 							{#if timerInterval}
 								<Button
 									on:click={() => {
@@ -207,7 +207,7 @@
 					</div>
 				{/if}
 
-				<div class="space-y-3">
+				<div class="space-y-4">
 					<h3 class="text-sm font-medium text-neutral-600">Move on by:</h3>
 
 					<div class="flex gap-2">
