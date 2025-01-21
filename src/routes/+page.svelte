@@ -1,6 +1,7 @@
 <script lang="ts">
 	import chime from '$lib/chime';
 	import { tasks, type Task } from '$lib/stores/tasks';
+	import Button from '$lib/components/Button.svelte';
 
 	const timeOptions = [
 		{ label: '10 sec', minutes: 0.16666666666666666 },
@@ -93,7 +94,7 @@
 		<nav>
 			<a
 				href="/tasks"
-				class="rounded bg-neutral-100 px-4 py-2 text-neutral-800 hover:bg-neutral-200 transition-colors duration-200"
+				class="rounded border border-neutral-300 bg-white px-4 py-2 text-neutral-700 transition-colors duration-200 hover:bg-neutral-50"
 			>
 				View All Tasks
 			</a>
@@ -138,8 +139,7 @@
 						</div>
 						<div class="mt-4 flex justify-center gap-2">
 							{#if timerInterval}
-								<button
-									class="rounded bg-neutral-100 px-4 py-2 text-neutral-800 transition-colors duration-200 hover:bg-neutral-200"
+								<Button
 									on:click={() => {
 										if (timerInterval) {
 											clearInterval(timerInterval);
@@ -148,10 +148,10 @@
 									}}
 								>
 									Pause
-								</button>
+								</Button>
 							{:else}
-								<button
-									class="bg-primary-600 hover:bg-primary-700 rounded px-4 py-2 text-white transition-colors duration-200"
+								<Button
+									variant="secondary"
 									on:click={() => {
 										timerInterval = setInterval(() => {
 											remainingSeconds--;
@@ -165,10 +165,10 @@
 									}}
 								>
 									Resume
-								</button>
+								</Button>
 							{/if}
 							<button
-								class="bg-primary-600 hover:bg-primary-700 rounded px-4 py-2 text-white transition-colors duration-200"
+								class="bg-primary-50 text-primary-700 hover:bg-primary-100 rounded px-4 py-2 transition-colors duration-200"
 								on:click={() => {
 									remainingSeconds = (activeTimer ?? 0) * 60;
 									if (timerInterval) {
@@ -227,7 +227,7 @@
 
 				<div class="flex gap-2">
 					<button
-						class="flex-1 rounded bg-neutral-100 px-4 py-2 text-neutral-800 transition-colors duration-200 hover:bg-neutral-200"
+						class="flex-1 rounded border border-neutral-300 bg-white px-4 py-2 text-neutral-700 transition-colors duration-200 hover:bg-neutral-50"
 						on:click={() => {
 							if (confirm('Are you sure you want to delete this task?') && currentTask) {
 								tasks.deleteTask(currentTask.id);
@@ -236,20 +236,16 @@
 					>
 						Delete
 					</button>
-					<button
-						class="bg-primary-600 hover:bg-primary-700 flex-1 rounded px-4 py-2 text-white transition-colors duration-200"
+					<Button
+						variant="primary"
+						flex
 						on:click={() => currentTask && tasks.completeTask(currentTask.id)}
 					>
 						Complete
-					</button>
+					</Button>
 				</div>
 
-				<button
-					class="w-full rounded bg-neutral-100 px-4 py-2 text-neutral-800 transition-colors duration-200 hover:bg-neutral-200"
-					on:click={handlePunt}
-				>
-					Skip for now
-				</button>
+				<Button fullWidth on:click={handlePunt}>Skip for now</Button>
 			</div>
 		</div>
 	{:else}
@@ -261,7 +257,7 @@
 
 	<!-- Add Task Button -->
 	<button
-		class="bg-primary-600 hover:bg-primary-700 fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full text-white shadow-md transition-all duration-200 hover:shadow-lg"
+		class="bg-primary-600 hover:bg-primary-700 fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full font-medium text-white shadow-md transition-all duration-200 hover:shadow-lg"
 		aria-label="Add tasks"
 		on:click={() => (showAddTaskModal = true)}
 		title="Add tasks"
