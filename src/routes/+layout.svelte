@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.css';
+	import { page } from '$app/stores';
 	let { children } = $props();
 
 	const navItems = [
@@ -8,7 +9,7 @@
 		{ href: '/settings', label: 'Settings' }
 	];
 
-	const currentPath = $derived(typeof window !== 'undefined' ? window.location.pathname : '/');
+	const currentPath = $derived($page.url.pathname);
 </script>
 
 <div class="min-h-screen bg-gradient-to-br from-neutral-50 to-neutral-100">
