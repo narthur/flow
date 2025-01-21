@@ -80,6 +80,18 @@
 				<p class="mb-6 text-gray-600">{currentTask.description}</p>
 			{/if}
 
+			<div class="mb-6">
+				<label for="notes" class="mb-2 block text-sm font-medium text-gray-700">Notes</label>
+				<textarea
+					id="notes"
+					rows="3"
+					class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+					placeholder="Add notes about this task..."
+					value={currentTask.notes ?? ''}
+					on:input={(e) => tasks.updateNotes(currentTask.id, e.currentTarget.value)}
+				/>
+			</div>
+
 			<div class="space-y-4">
 				{#if activeTimer}
 					<div class="py-4 text-center">

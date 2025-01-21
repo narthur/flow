@@ -6,6 +6,7 @@ export interface Task {
     title: string;
     description?: string;
     postponedUntil?: Date;
+    notes?: string;
 }
 
 function createTaskStore() {
@@ -50,6 +51,13 @@ function createTaskStore() {
                 if (!task) return tasks;
                 return [...tasks.filter(t => t.id !== taskId), { ...task }];
             });
+        },
+        updateNotes: (taskId: string, notes: string) => {
+            update(tasks => tasks.map(task =>
+                task.id === taskId
+                    ? { ...task, notes }
+                    : task
+            ));
         }
     };
 }
