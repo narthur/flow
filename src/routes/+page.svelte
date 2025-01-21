@@ -100,6 +100,7 @@
 			</a>
 		</nav>
 	</header>
+
 	{#if currentTask}
 		<div
 			class="mb-6 rounded-lg bg-white p-6 shadow-md transition-shadow duration-200 hover:shadow-lg"
@@ -179,8 +180,7 @@
 							>
 								Reset
 							</Button>
-							<button
-								class="rounded bg-neutral-100 px-4 py-2 text-neutral-700 hover:bg-neutral-200"
+							<Button
 								on:click={() => {
 									if (timerInterval) {
 										clearInterval(timerInterval);
@@ -191,7 +191,7 @@
 								}}
 							>
 								Cancel
-							</button>
+							</Button>
 						</div>
 					</div>
 				{:else}
@@ -199,10 +199,7 @@
 						<h3 class="mb-3 text-sm font-medium text-neutral-600">Start working timer:</h3>
 						<div class="flex flex-wrap gap-2">
 							{#each timeOptions as option}
-								<Button
-									variant="secondary"
-									on:click={() => startTimer(option.minutes)}
-								>
+								<Button variant="secondary" on:click={() => startTimer(option.minutes)}>
 									{option.label}
 								</Button>
 							{/each}
@@ -210,49 +207,42 @@
 					</div>
 				{/if}
 
-				<div class="flex gap-2">
-					<input
-						type="text"
-						bind:value={postponeInput}
-						placeholder="e.g. tomorrow at 2pm"
-						class="focus:border-primary-500 focus:ring-primary-500 flex-1 rounded border-neutral-200 px-4 py-2 transition-colors duration-200 focus:ring-2"
-					/>
-					<Button
-						variant="secondary"
-						on:click={handlePostpone}
-					>
-						Postpone
-					</Button>
-				</div>
-				{#if postponeError}
-					<p class="text-sm text-red-500">{postponeError}</p>
-				{/if}
+				<div class="space-y-3">
+					<h3 class="text-sm font-medium text-neutral-600">Move on by:</h3>
 
-				<div class="flex gap-2">
-					<Button
-						on:click={() => {
-							if (confirm('Are you sure you want to delete this task?') && currentTask) {
-								tasks.deleteTask(currentTask.id);
-							}
-						}}
-						flex
-					>
-						Delete
-					</Button>
-					<Button
-						variant="primary"
-						flex
-						on:click={() => currentTask && tasks.completeTask(currentTask.id)}
-					>
-						Complete
-					</Button>
-					<Button
-						variant="secondary"
-						flex
-						on:click={handlePunt}
-					>
-						Next
-					</Button>
+					<div class="flex gap-2">
+						<input
+							type="text"
+							bind:value={postponeInput}
+							placeholder="e.g. tomorrow at 2pm"
+							class="focus:border-primary-500 focus:ring-primary-500 flex-1 rounded border-neutral-200 px-4 py-2 transition-colors duration-200 focus:ring-2"
+						/>
+						<Button on:click={handlePostpone}>Postpone</Button>
+					</div>
+					{#if postponeError}
+						<p class="text-sm text-red-500">{postponeError}</p>
+					{/if}
+
+					<div class="flex gap-2">
+						<Button
+							on:click={() => {
+								if (confirm('Are you sure you want to delete this task?') && currentTask) {
+									tasks.deleteTask(currentTask.id);
+								}
+							}}
+							flex
+						>
+							Delete
+						</Button>
+						<Button
+							variant="secondary"
+							flex
+							on:click={() => currentTask && tasks.completeTask(currentTask.id)}
+						>
+							Complete
+						</Button>
+						<Button variant="secondary" flex on:click={handlePunt}>Next</Button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -265,7 +255,7 @@
 
 	<!-- Add Task Button -->
 	<button
-		class="fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full border border-primary-600 bg-primary-500 font-medium text-white shadow-md transition-all duration-200 hover:bg-primary-600 hover:shadow-lg"
+		class="border-primary-600 bg-primary-500 hover:bg-primary-600 fixed bottom-6 right-6 flex h-14 w-14 items-center justify-center rounded-full border font-medium text-white shadow-md transition-all duration-200 hover:shadow-lg"
 		aria-label="Add tasks"
 		on:click={() => (showAddTaskModal = true)}
 		title="Add tasks"
@@ -288,7 +278,7 @@
 				<h2 class="mb-4 text-xl font-bold">Add Tasks</h2>
 				<p class="mb-2 text-sm text-gray-600">Enter one task per line</p>
 				<textarea
-					class="focus:border-primary-500 focus:ring-primary-500 mb-4 h-32 w-full rounded-lg border border-neutral-200 bg-white p-4 shadow-inner transition-all duration-200 hover:border-neutral-300 focus:ring-2"
+					class="focus:border-primary-500 focus:ring-primary-500 mb-4 h-32 w-full resize-none rounded border p-4 transition-colors duration-200 focus:ring-2"
 					placeholder="Buy groceries&#10;Call dentist&#10;Write report"
 					bind:value={newTaskInput}
 					on:keydown={(e) => {
@@ -298,21 +288,15 @@
 					}}
 				></textarea>
 				<div class="flex justify-end gap-2">
-					<button
-						class="rounded-lg border border-neutral-300 bg-gradient-to-b from-neutral-100 to-neutral-200 px-4 py-2 shadow-sm transition-all duration-200 hover:from-neutral-200 hover:to-neutral-300 active:translate-y-0.5 active:shadow-none"
+					<Button
 						on:click={() => {
 							showAddTaskModal = false;
 							newTaskInput = '';
 						}}
 					>
 						Cancel
-					</button>
-					<button
-						class="border-primary-600 from-primary-400 to-primary-500 hover:from-primary-500 hover:to-primary-600 rounded-lg border bg-gradient-to-b px-4 py-2 text-white shadow-sm transition-all duration-200 active:translate-y-0.5 active:shadow-none"
-						on:click={handleAddTasks}
-					>
-						Add Tasks
-					</button>
+					</Button>
+					<Button variant="primary" on:click={handleAddTasks}>Add Tasks</Button>
 				</div>
 			</div>
 		</div>
