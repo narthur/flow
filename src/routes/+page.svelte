@@ -195,15 +195,18 @@
 						</div>
 					</div>
 				{:else}
-					<div class="flex flex-wrap gap-2">
-						{#each timeOptions as option}
-							<Button
-								variant="secondary"
-								on:click={() => startTimer(option.minutes)}
-							>
-								{option.label}
-							</Button>
-						{/each}
+					<div>
+						<h3 class="mb-3 text-sm font-medium text-neutral-600">Start working timer:</h3>
+						<div class="flex flex-wrap gap-2">
+							{#each timeOptions as option}
+								<Button
+									variant="secondary"
+									on:click={() => startTimer(option.minutes)}
+								>
+									{option.label}
+								</Button>
+							{/each}
+						</div>
 					</div>
 				{/if}
 
@@ -226,16 +229,16 @@
 				{/if}
 
 				<div class="flex gap-2">
-					<button
-						class="flex-1 rounded border border-neutral-300 bg-white px-4 py-2 text-neutral-700 transition-colors duration-200 hover:bg-neutral-50"
+					<Button
 						on:click={() => {
 							if (confirm('Are you sure you want to delete this task?') && currentTask) {
 								tasks.deleteTask(currentTask.id);
 							}
 						}}
+						flex
 					>
 						Delete
-					</button>
+					</Button>
 					<Button
 						variant="primary"
 						flex
@@ -243,9 +246,14 @@
 					>
 						Complete
 					</Button>
+					<Button
+						variant="secondary"
+						flex
+						on:click={handlePunt}
+					>
+						Next
+					</Button>
 				</div>
-
-				<Button fullWidth on:click={handlePunt}>Skip for now</Button>
 			</div>
 		</div>
 	{:else}
