@@ -70,6 +70,12 @@ function createTaskStore() {
             const id = crypto.randomUUID();
             update(tasks => [...tasks, { id, title }]);
             return id;
+        },
+        deleteTask: (taskId: string) => {
+            update(tasks => tasks.filter(task => task.id !== taskId));
+        },
+        completeTask: (taskId: string) => {
+            update(tasks => tasks.filter(task => task.id !== taskId));
         }
     };
 }

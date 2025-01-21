@@ -138,6 +138,25 @@
 					<p class="text-sm text-red-500">{postponeError}</p>
 				{/if}
 
+				<div class="flex gap-2">
+					<button
+						class="flex-1 rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+						on:click={() => {
+							if (confirm('Are you sure you want to delete this task?')) {
+								tasks.deleteTask(currentTask.id);
+							}
+						}}
+					>
+						Delete
+					</button>
+					<button
+						class="flex-1 rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600"
+						on:click={() => tasks.completeTask(currentTask.id)}
+					>
+						Complete
+					</button>
+				</div>
+
 				<button
 					class="w-full rounded bg-gray-200 px-4 py-2 hover:bg-gray-300"
 					on:click={handlePunt}
