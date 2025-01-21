@@ -15,8 +15,7 @@
 	let currentTask: Task | null = null;
 	let postponeInput = '';
 	let postponeError = '';
-	let activeTimer: number | null = null;
-	let remainingSeconds = 0;
+	import { timer } from '$lib/stores/timer';
 	let timerInterval: ReturnType<typeof setInterval> | null = null;
 	let showAddTaskModal = false;
 	let newTaskInput = '';
@@ -43,30 +42,34 @@
 			}) || null;
 	}
 
-	function startTimer(minutes: number) {
-		// Clear any existing timer
-		if (timerInterval) {
-			clearInterval(timerInterval);
-		}
-
-		remainingSeconds = minutes * 60;
-		activeTimer = minutes;
-
+	// Start interval when timer is running
+	$: if ($timer.isRunning && !timerInterval) {
 		timerInterval = setInterval(() => {
-			remainingSeconds--;
-			if (remainingSeconds <= 0) {
+			timer.tick();
+			if ($timer.remainingSeconds <= 0) {
 				if (timerInterval) clearInterval(timerInterval);
 				timerInterval = null;
 
 				// Record the completed session
-				if (currentTask && activeTimer) {
-					tasks.recordSession(currentTask.id, activeTimer);
+				if (currentTask && $timer.activeTimer) {
+					tasks.recordSession(currentTask.id, $timer.activeTimer);
 				}
 
-				activeTimer = null;
+				timer.clear();
 				chime();
 			}
 		}, 1000);
+	} else if (!$timer.isRunning && timerInterval) {
+		clearInterval(timerInterval);
+		timerInterval = null;
+	}
+
+	function startTimer(minutes: number) {
+		if (timerInterval) {
+			clearInterval(timerInterval);
+			timerInterval = null;
+		}
+		timer.start(minutes);
 	}
 
 	function formatTime(seconds: number): string {
@@ -149,54 +152,33 @@
 			</div>
 
 			<div class="space-y-6">
-				{#if activeTimer}
+				{#if $timer.activeTimer}
 					<div class="py-6 text-center">
 						<div
 							class="text-primary-600 font-mono text-4xl font-bold transition-colors duration-200"
 						>
-							{formatTime(remainingSeconds)}
+							{formatTime($timer.remainingSeconds)}
 						</div>
 						<div class="mt-2 text-gray-500">
-							Working for {activeTimer} minutes
+							Working for {$timer.activeTimer} minutes
 						</div>
 						<div class="mt-6 flex justify-center gap-2">
-							{#if timerInterval}
+							{#if $timer.isRunning}
 								<Button
-									on:click={() => {
-										if (timerInterval) {
-											clearInterval(timerInterval);
-											timerInterval = null;
-										}
-									}}
+									on:click={() => timer.pause()}
 								>
 									Pause
 								</Button>
 							{:else}
 								<Button
 									variant="secondary"
-									on:click={() => {
-										timerInterval = setInterval(() => {
-											remainingSeconds--;
-											if (remainingSeconds <= 0) {
-												if (timerInterval) clearInterval(timerInterval);
-												timerInterval = null;
-												activeTimer = null;
-												chime();
-											}
-										}, 1000);
-									}}
+									on:click={() => timer.resume()}
 								>
 									Resume
 								</Button>
 							{/if}
 							<Button
-								on:click={() => {
-									remainingSeconds = (activeTimer ?? 0) * 60;
-									if (timerInterval) {
-										clearInterval(timerInterval);
-										timerInterval = null;
-									}
-								}}
+								on:click={() => timer.reset()}
 							>
 								Reset
 							</Button>
@@ -206,8 +188,7 @@
 										clearInterval(timerInterval);
 										timerInterval = null;
 									}
-									activeTimer = null;
-									remainingSeconds = 0;
+									timer.clear();
 								}}
 							>
 								Cancel
@@ -261,8 +242,8 @@
 								if (!currentTask) return;
 								
 								// Record final session if timer was active
-								if (activeTimer) {
-									const sessionMinutes = Math.round((activeTimer * 60 - remainingSeconds) / 60);
+								if ($timer.activeTimer) {
+									const sessionMinutes = Math.round(($timer.activeTimer * 60 - $timer.remainingSeconds) / 60);
 									tasks.recordSession(currentTask.id, sessionMinutes);
 								}
 
@@ -271,8 +252,7 @@
 									clearInterval(timerInterval);
 									timerInterval = null;
 								}
-								activeTimer = null;
-								remainingSeconds = 0;
+								timer.clear();
 
 								tasks.completeTask(currentTask.id);
 							}}
