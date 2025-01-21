@@ -169,7 +169,6 @@
 								</Button>
 							{/if}
 							<Button
-								variant="secondary"
 								on:click={() => {
 									remainingSeconds = (activeTimer ?? 0) * 60;
 									if (timerInterval) {

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { tasks, type Task } from '$lib/stores/tasks';
+	import { tasks } from '$lib/stores/tasks';
+	import Button from '$lib/components/Button.svelte';
 
 	function formatDate(date: Date | undefined): string {
 		if (!date) return 'Not postponed';
@@ -16,11 +17,8 @@
 	<header class="mb-8 flex items-center justify-between">
 		<h1 class="text-2xl font-bold text-neutral-800">All Tasks</h1>
 		<nav>
-			<a
-				href="/"
-				class="rounded bg-neutral-100 px-4 py-2 text-neutral-800 hover:bg-neutral-200 transition-colors duration-200"
-			>
-				Back to Timer
+			<a href="/" class="inline-block">
+				<Button>Back to Timer</Button>
 			</a>
 		</nav>
 	</header>
